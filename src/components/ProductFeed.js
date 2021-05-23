@@ -52,7 +52,7 @@ function ProductFeed({ products }) {
             image={image}
           />
         ))}
-      <div className='xl:col-span-4'>
+      <div className='xl:col-span-4 md:col-span-2 lg:col-span-1'>
         {products
           .slice(products.length - 1, products.length)
           .map(({ id, title, price, description, category, image }) => (

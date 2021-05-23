@@ -11,6 +11,8 @@ module.exports = {
         amazon_blue: {
           light: '#232F3E',
           DEFAULT: '#131921',
+          mlight: '#3d456e',
+          xlight: '#4a548a',
         },
       },
     },

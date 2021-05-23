@@ -1,5 +1,7 @@
 import Head from 'next/head';
+import { useState } from 'react';
 import Banner from '../components/Banner';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ProductFeed from '../components/ProductFeed';
 
@@ -10,12 +12,16 @@ export default function Home({ products }) {
         <title>Clone by oluwatosin</title>
       </Head>
 
-      <Header />
+      <div className='sticky top-0 z-40'>
+        <Header />
+      </div>
 
       <main className='max-w-screen-2xl mx-auto'>
         <Banner />
         <ProductFeed products={products} />
       </main>
+
+      <Footer />
     </div>
   );
 }
