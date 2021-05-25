@@ -1,3 +1,6 @@
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+
 import { StarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 import Currency from 'react-currency-formatter';
@@ -38,7 +41,10 @@ function CheckoutProduct({
 
   return (
     <div className='grid grid-cols-5'>
-      <Image src={image} height={200} width={200} objectFit='contain' />
+      <div className='hover_animation'>
+        <Image src={image} height={200} width={200} objectFit='contain' />
+      </div>
+
       {/* middle */}
       <div className='col-span-3 mx-5'>
         <p>{title}</p>
@@ -67,12 +73,18 @@ function CheckoutProduct({
         )}
       </div>
       {/* Right and remove button */}
-      <div className='flex flex-col space-y-2 my-auto justify-self-end'>
-        <button className='button' onClick={addItemToBasket}>
-          Add More to Basket
+      <div className='flex space-x-3 my-auto justify-self-end'>
+        <button
+          onClick={addItemToBasket}
+          className='flex mt-auto justify-center self-end button1'
+        >
+          <AddShoppingCartIcon className='text-white' />
         </button>
-        <button onClick={removeItemFromBasket} className='button'>
-          Remove from Basket
+        <button
+          onClick={removeItemFromBasket}
+          className='flex mt-auto justify-center self-end button1'
+        >
+          <RemoveShoppingCartIcon className='text-white' />
         </button>
       </div>
     </div>

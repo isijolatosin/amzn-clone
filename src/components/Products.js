@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+
 import { StarIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import Currency from 'react-currency-formatter';
@@ -14,6 +16,7 @@ function Products({ id, title, price, description, category, image }) {
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1) + MIN_RATING)
   );
   const [hasPrime] = useState(Math.random() < 0.5);
+  const [showTitle, setShowTitle] = useState(false);
 
   const addItemToBasket = () => {
     const product = {
@@ -31,23 +34,26 @@ function Products({ id, title, price, description, category, image }) {
   };
 
   return (
-    <div className='relative flex flex-col m-5 bg-white z-30 p-10 hover_animation'>
+    <div
+      onMouseOver={() => setShowTitle(true)}
+      onMouseLeave={() => setShowTitle(false)}
+      className='relative flex flex-col m-5 bg-white z-30 p-10 pt-16 hover_animation_nocursor'
+    >
       <p className='absolute top-2 right-2 text-xs italic text-gray-400'>
         {category}
       </p>
-      <Image src={image} height={200} width={200} objectFit='contain' />
-      <h4 className='my-3'>{title}</h4>
-      <div className='flex'>
+      <div className='absolute top-6 right-2 flex self-end mb-3'>
         {Array(rating)
           .fill()
           .map((_, i) => (
             <StarIcon className='h-5 text-yellow-500' />
           ))}
       </div>
-      <p className='text-xs my-2 line-clamp-2'>{description}</p>
+      <Image src={image} height={200} width={200} objectFit='contain' />
+      <p className='text-xs mb-2 mt-5 line-clamp-2'>{description}</p>
       <div className='mb-5'>
         <p className='font-bold'>
-          CAD
+          CA
           <Currency quantity={price} currency='CAD' />
         </p>
       </div>
@@ -57,8 +63,17 @@ function Products({ id, title, price, description, category, image }) {
           <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
         </div>
       )}
-      <button onClick={addItemToBasket} className='mt-auto button'>
-        Add to Basket
+
+      {showTitle && (
+        <div className='absolute flex justify-center pt-20 h-2/4 px-8 items-start bg-gray-700 bg-opacity-50 top-0 left-0 w-full rounded-b-3xl mt-11 mb-3'>
+          <h4 className='text-white text-center font-extrabold'>{title}</h4>
+        </div>
+      )}
+      <button
+        onClick={addItemToBasket}
+        className='flex mt-auto justify-center self-end button1'
+      >
+        <AddShoppingCartIcon className='text-white' />
       </button>
     </div>
   );

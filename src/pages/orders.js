@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import moment from 'moment';
 import db from '../../firebase';
 import Order from '../components/Order';
+import Footer2 from '../components/Footer2';
 
 function Orders({ orders }) {
   const [session] = useSession();
@@ -13,11 +14,11 @@ function Orders({ orders }) {
     <div>
       <Header />
       <main className='max-w-screen-lg mx-auto p-10'>
-        <h1 className='text-3xl border-b mb-2 pb-1 border-yellow-400'>
+        <h1 className='text-3xl border-b mb-2 pb-1 border-gray-300'>
           Your Orders
         </h1>
         {session ? (
-          <h2>
+          <h2 className='mb-2'>
             {orders.length} {orders.length <= 1 ? 'Order' : 'Orders'}
           </h2>
         ) : (
@@ -48,6 +49,9 @@ function Orders({ orders }) {
           )}
         </div>
       </main>
+      <div>
+        <Footer2 />
+      </div>
     </div>
   );
 }

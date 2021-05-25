@@ -34,7 +34,7 @@ function header() {
         </div>
       )}
       {/* Top navigation */}
-      <div className='flex items-center bg-amazon_blue p-1 flex-row py-2'>
+      <div className='flex items-center bg-gray-300 p-1 flex-row py-2'>
         {/* Amazon Logo */}
         <div className='mt-2 flex items-center flex-grow sm:flex-grow-0'>
           <Image
@@ -55,7 +55,7 @@ function header() {
           <SearchIcon className='h-12 p-4' />
         </div>
         {/* Right */}
-        <div className=' text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
+        <div className=' text-gray-600 flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
           <div
             onMouseOver={() => setShowSignOut(true)}
             onClick={!session && signIn}
@@ -64,7 +64,7 @@ function header() {
             <p>
               Hello,{' '}
               {session ? (
-                <span className='text-yellow-400 font-bold'>
+                <span className='text-gray-100 font-bold'>
                   {session.user.name.split(' ')[0]}
                 </span>
               ) : (
