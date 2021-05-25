@@ -213,14 +213,22 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className='bg-amazon_blue-light w-full'>
-        <div className='flex text-white text-xs lg:w-4/12 sm:7/12 w-9/12 justify-between m-auto  pb-12 pt-5 '>
+      <div className='text-gray-500 sm:flex pl-10 sm:pl-0 bg-amazon_blue-light sm:space-x-10 justify-center'>
+        <div className='flex text-xs pb-1 space-x-5 '>
           <p>Conditions of Use</p>
           <p>Privacy Notice</p>
           <p>Interest-Based Ads</p>
+        </div>
+        <div className='text-xs pb-12'>
           <p>
-            {`\u00A9 2008-${new Date().getFullYear()}`}
-            ,Amazon.com, Inc. or its affiliates
+            {`\u00A9${new Date().getFullYear()}`}, Amazon-clone by -{' '}
+            <a
+              className='text-blue-500'
+              href='https://olu-isijola.herokuapp.com/#home'
+              target='blank'
+            >
+              oluwatosin isijola.
+            </a>
           </p>
         </div>
       </div>

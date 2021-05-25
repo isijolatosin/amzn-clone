@@ -46,8 +46,8 @@ function Products({ id, title, price, description, category, image }) {
       </div>
       <p className='text-xs my-2 line-clamp-2'>{description}</p>
       <div className='mb-5'>
-        <p>
-          CA
+        <p className='font-bold'>
+          CAD
           <Currency quantity={price} currency='CAD' />
         </p>
       </div>

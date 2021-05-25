@@ -50,8 +50,8 @@ function CheckoutProduct({
             ))}
         </div>
         <p className='text-xs my-2 line-clamp-3'>{description}</p>
-        <p>
-          CA
+        <p className='font-bold'>
+          CAD
           <Currency quantity={price} currency='CAD' />
         </p>
         {hasPrime && (

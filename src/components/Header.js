@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { selectItems } from '../slices/basketSlice';
 import { useSelector } from 'react-redux';
+import Sidebar from './Sidebar';
 // import { MaterialCommunityIcons } from 'react-web-vector-icons';
 
 function header() {
@@ -16,15 +17,22 @@ function header() {
   const [session] = useSession();
   const router = useRouter();
   const items = useSelector(selectItems);
+  const [showSideBar, setShowSideBar] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setShowSignOut(false);
     }, [5000]);
-  }, []);
+  }, [showSignOut]);
 
   return (
     <header>
+      {/* sidebar */}
+      {showSideBar && (
+        <div className='hidden sm:flex fixed z-50 w-full top-0 bg-black bg-opacity-70 h-screen'>
+          <Sidebar setShowSideBar={setShowSideBar} />
+        </div>
+      )}
       {/* Top navigation */}
       <div className='flex items-center bg-amazon_blue p-1 flex-row py-2'>
         {/* Amazon Logo */}
@@ -65,7 +73,7 @@ function header() {
             </p>
             <p className='font-extrabold md:text-sm'>Account & Lists</p>
           </div>
-          <div className='link'>
+          <div onClick={() => router.push('/orders')} className='link'>
             <p>Returns</p>
             <p className='font-extrabold md:text-sm'>& Orders</p>
           </div>
@@ -85,7 +93,10 @@ function header() {
       </div>
       {/* Bottom navigation */}
       <div className='bg-white flex text-amazon_blue space-x-3 p-2 pl-6 whitespace-nowrap items-center text-xs'>
-        <p className='link flex items-center '>
+        <p
+          onClick={() => setShowSideBar(true)}
+          className='link flex items-center '
+        >
           <MenuIcon className='h-6 mr-1' />
           All
         </p>
@@ -125,17 +136,6 @@ function header() {
             )
           : null}
       </div>
-
-      {/* sidebar */}
-      <div>
-        <div>{/* sidebar header */}</div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <div></div>
     </header>
   );
 }
