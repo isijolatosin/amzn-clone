@@ -8,7 +8,7 @@ import Footer2 from '../components/Footer2';
 function Orders({ orders }) {
   const [session] = useSession();
 
-  console.log(orders);
+  // console.log(orders);
 
   return (
     <div>
@@ -33,7 +33,7 @@ function Orders({ orders }) {
             to see your orders
           </h2>
         )}
-        <div clasName='mt-5 space-y-4'>
+        <div className='mt-5 space-y-4'>
           {orders?.map(
             ({ id, amount, amountShipping, items, timestamp, images }) => (
               <Order
