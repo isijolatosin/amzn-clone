@@ -28,7 +28,7 @@ function Order({ id, amount, amountShipping, items, timestamp, images }) {
         </p>
       </div>
       <div className='p-5 sm:p-10'>
-        <div className='flex space-x-6 overflow-x-autoP'>
+        <div className='flex space-x-6 overflow-x-auto'>
           {images.map((image) => (
             <img src={image} alt='' className='h-20 object-contain sm:h-32' />
           ))}
