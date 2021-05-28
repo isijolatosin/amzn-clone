@@ -224,7 +224,7 @@ function Footer() {
             {`\u00A9${new Date().getFullYear()}`}, Amazon-clone by -{' '}
             <a
               className='text-blue-500'
-              href='https://olu-isijola.herokuapp.com/#home'
+              href='https://olu-isijola.herokuapp.com'
               target='blank'
             >
               oluwatosin isijola.
