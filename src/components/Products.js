@@ -6,6 +6,8 @@ import { useState } from 'react';
 import Currency from 'react-currency-formatter';
 import { useDispatch } from 'react-redux';
 import { addToBasket } from '../slices/basketSlice';
+import db from '../../firebase';
+import { useSession } from 'next-auth/client';
 
 const MAX_RATING = 5;
 const MIN_RATING = 1;
@@ -17,6 +19,7 @@ function Products({ id, title, price, description, category, image }) {
   );
   const [hasPrime] = useState(Math.random() < 0.5);
   const [showTitle, setShowTitle] = useState(false);
+  const [session] = useSession();
 
   const addItemToBasket = () => {
     const product = {
@@ -31,6 +34,27 @@ function Products({ id, title, price, description, category, image }) {
 
     // Sending the product through dispatch action to REDUX store... the basket slice
     dispatch(addToBasket(product));
+
+    // Adding to firebase DB...
+    db.collection('checkout')
+      .doc(`${session.user.email}/`)
+      .collection('shopping-items')
+      .add(
+        {
+          id: id,
+          title: title,
+          price: price,
+          description: description,
+          category: category,
+          image: image,
+          hasPrime: hasPrime,
+        },
+        { merge: true }
+      )
+      .then(() => {
+        console.log(`SUCCESS: item ${session.id} had been added to the DB`);
+      })
+      .catch((error) => console.log('Error' + error.message));
   };
 
   return (

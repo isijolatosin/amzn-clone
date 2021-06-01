@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { selectItems } from '../slices/basketSlice';
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
+import db from '../../firebase';
 // import { MaterialCommunityIcons } from 'react-web-vector-icons';
 
 function header() {
@@ -18,12 +19,27 @@ function header() {
   const router = useRouter();
   const items = useSelector(selectItems);
   const [showSideBar, setShowSideBar] = useState(false);
+  const [itemsList, setItemsList] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
       setShowSignOut(false);
     }, [5000]);
   }, [showSignOut]);
+
+  useEffect(() => {
+    db.collection('checkout')
+      .doc(`${session?.user.email}/`)
+      .collection('shopping-items')
+      .onSnapshot((snapshot) =>
+        setItemsList(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+  }, [itemsList]);
 
   return (
     <header>
@@ -82,7 +98,7 @@ function header() {
             className='relative link flex items-center'
           >
             <span className='absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full font-bold text-black'>
-              {items.length}
+              {itemsList.length === 0 ? '0' : itemsList.length}
             </span>
             <ShoppingCartIcon className='h-10' />
             <p className='hidden font-extrabold md:text-sm md:inline mt-2'>

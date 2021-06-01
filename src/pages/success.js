@@ -1,9 +1,23 @@
 import { CheckCircleIcon } from '@heroicons/react/solid';
+import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
+import db from '../../firebase';
 import Header from '../components/Header';
 
 function Success() {
   const router = useRouter();
+  const [session] = useSession();
+
+  const deleteShoppingBasket = () => {
+    db.collection('checkout')
+      .doc(`${session?.user.email}/`)
+      .collection('shopping-items')
+      .onSnapshot((snapshot) =>
+        snapshot.docs.map((doc) => {
+          doc.ref.delete();
+        })
+      );
+  };
 
   return (
     <div className='bg-gray-100 h-screen'>
@@ -22,7 +36,12 @@ function Success() {
             order(s), please press the link below.
           </p>
           <button
-            onClick={() => router.push('/orders')}
+            onClick={
+              (deleteShoppingBasket(),
+              () => {
+                router.push('/orders');
+              })
+            }
             className='button mt-8'
           >
             Go to my orders

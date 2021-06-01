@@ -6,6 +6,8 @@ import Image from 'next/image';
 import Currency from 'react-currency-formatter';
 import { useDispatch } from 'react-redux';
 import { addToBasket, removeFromBasket } from '../slices/basketSlice';
+import db from '../../firebase';
+import { useSession } from 'next-auth/client';
 
 function CheckoutProduct({
   id,
@@ -18,25 +20,69 @@ function CheckoutProduct({
   description,
 }) {
   const dispatch = useDispatch();
+  const [session] = useSession();
 
   const addItemToBasket = () => {
-    const product = {
-      id,
-      title,
-      price,
-      rating,
-      category,
-      image,
-      hasPrime,
-      description,
-    };
-    // Push item into REDUX
-    dispatch(addToBasket(product));
+    // const product = {
+    //   id,
+    //   title,
+    //   price,
+    //   rating,
+    //   category,
+    //   image,
+    //   hasPrime,
+    //   description,
+    // };
+    // // Push item into REDUX
+    // dispatch(addToBasket(product));
+
+    // Adding to DB
+    db.collection('checkout')
+      .doc(`${session.user.email}/`)
+      .collection('shopping-items')
+      .add(
+        {
+          id: id,
+          title: title,
+          price: price,
+          description: description,
+          category: category,
+          image: image,
+          hasPrime: hasPrime,
+        },
+        { merge: true }
+      )
+      .then(() => {
+        console.log(`SUCCESS: item ${session.id} had been added to the DB`);
+      })
+      .catch((error) => console.log('Error' + error.message));
   };
 
   const removeItemFromBasket = () => {
+    // Adding to DB
+    db.collection('checkout')
+      .doc(`${session.user.email}/`)
+      .collection('shopping-items')
+      .doc(`${id}`)
+      .delete()
+      .then(() => {
+        console.log('Document successfully deleted!');
+      })
+      .catch((error) => {
+        console.error('Error removing document: ', error);
+      });
+
+    // .onSnapshot((snapshot) =>
+    //   snapshot.docs.map((doc) => {
+    //     if (doc.id === id) {
+    //       doc.delete();
+    //       // console.log(doc.id);
+    //     }
+    //   })
+    // );
+
     // remove item from REDUX
-    dispatch(removeFromBasket({ id }));
+    // dispatch(removeFromBasket({ id }));
   };
 
   return (
@@ -81,6 +127,7 @@ function CheckoutProduct({
           <AddShoppingCartIcon className='text-white' />
         </button>
         <button
+          key={id}
           onClick={removeItemFromBasket}
           className='flex mt-auto justify-center self-end button1'
         >

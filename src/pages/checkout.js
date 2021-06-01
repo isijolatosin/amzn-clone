@@ -4,24 +4,31 @@ import Header from '../components/Header';
 import Footer2 from '../components/Footer2';
 import { selectItems, selectTotal } from '../slices/basketSlice';
 import CheckoutProduct from '../components/CheckoutProduct';
+import CheckoutProduct2 from '../components/CheckoutProduct2';
 import Currency from 'react-currency-formatter';
 import { getSession, useSession } from 'next-auth/client';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import db from '../../firebase';
 
 const stripePromise = loadStripe(process.env.stripe_public_key);
 
 function Checkout() {
-  const items = useSelector(selectItems);
+  const [itemsList, setItemsList] = useState([]);
+  // const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
   const [session] = useSession();
+
+  // console.log(itemsList);
 
   const createCheckoutSession = async () => {
     const stripe = await stripePromise;
 
     // call the backend to create a checkout session...
+
     const checkoutSession = await axios.post('/api/create-checkout-session', {
-      items: items,
+      items: itemsList,
       email: session.user.email,
     });
 
@@ -34,6 +41,29 @@ function Checkout() {
       alert(result.error.message);
     }
   };
+
+  // Getting items from DB
+  useEffect(() => {
+    db.collection('checkout')
+      .doc(`${session.user.email}/`)
+      .collection('shopping-items')
+      .onSnapshot((snapshot) =>
+        setItemsList(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+  }, [itemsList]);
+
+  // Calculating Subtotal
+  const subTotal = itemsList.reduce(
+    (total, item) => total + item.data.price,
+    0
+  );
+
+  // console.log(subTotal);
 
   return (
     <div className='bg-gray-100'>
@@ -51,11 +81,25 @@ function Checkout() {
           </div>
           <div className='flex flex-col p-5 space-y-10 bg-white'>
             <h1 className='text-3xl border-b pb-4'>
-              {items.length === 0
+              {itemsList.length === 0
                 ? 'Your Amazon Basket is empty'
                 : 'Shopping Basket'}
             </h1>
-            {items.map((item, i) => (
+            {itemsList.map((item) => (
+              <CheckoutProduct
+                key={item.id}
+                id={item.id}
+                title={item.data.title}
+                price={item.data.price}
+                rating={item.data.rating}
+                category={item.data.category}
+                image={item.data.image}
+                hasPrime={item.data.hasPrime}
+                description={item.data.description}
+              />
+            ))}
+            {/* THIS IS FOR GETTING ITEMS FROM REDUX */}
+            {/* {items.map((item, i) => (
               <CheckoutProduct
                 key={i}
                 id={item.id}
@@ -67,20 +111,20 @@ function Checkout() {
                 hasPrime={item.hasPrime}
                 description={item.description}
               />
-            ))}
+            ))} */}
           </div>
         </div>
 
         {/* Right */}
-        {items.length > 0 && (
+        {itemsList.length > 0 && (
           <div className='flex flex-col bg-white p-10 shadow-md'>
-            {items.length > 0 && (
+            {itemsList.length > 0 && (
               <>
                 <h2 className='whitespace-nowrap'>
-                  Subtotal ({items.length} items):{' '}
+                  Subtotal ({itemsList.length} items):{' '}
                   <span className='font-bold'>
                     CAD
-                    <Currency quantity={total} currency='CAD' />
+                    <Currency quantity={subTotal} currency='CAD' />
                   </span>
                 </h2>
                 <button
