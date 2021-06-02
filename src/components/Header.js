@@ -73,12 +73,14 @@ function header() {
         </div>
         {/* Right */}
         <div className=' text-gray-600 flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-          <div className='hover_animation'>
-            <Avatar
-              onMouseOver={() => setShowSignOut(true)}
-              src={session.user.image}
-            />
-          </div>
+          {session && (
+            <div className='hover_animation'>
+              <Avatar
+                onMouseOver={() => setShowSignOut(true)}
+                src={session.user.image}
+              />
+            </div>
+          )}
           <div onClick={!session && signIn} className='link'>
             <p>
               Hello,{' '}
