@@ -4,15 +4,19 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
+import { Avatar } from '@material-ui/core';
 
 function Sidebar({ setShowSideBar }) {
   const [session] = useSession();
 
+  // console.log(session);
+
   return (
     <div className='sm:w-5/12 md:w-4/12 lg:w-3/12 xl:w-2/12'>
       {/* sidebar header */}
-      <header className='relative flex top-0 z-40  text-white text-xl font-extrabold pb-3  items-center bg-amazon_blue-light pl-10 pt-3 pr-5 '>
-        <AccountCircleIcon fontSize='large' className='text-white mr-2' />
+      <header className='relative flex top-0 z-40   text-xl font-extrabold pb-3  items-center bg-gray-300 pl-10 pt-3 pr-5 space-x-2 '>
+        <Avatar src={session.user.image} />
+
         <p>
           Hello,{' '}
           {session ? (
@@ -72,7 +76,7 @@ function Sidebar({ setShowSideBar }) {
               />
             </div>
             <div className='flex justify-between align-center'>
-              <p className='mb-7'>Amazon Prime Vidoe</p>
+              <p className='mb-7'>Amazon Prime Video</p>
               <KeyboardArrowRightIcon
                 fontSize='medium'
                 className='text-gray-500'

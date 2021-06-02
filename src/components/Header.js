@@ -11,6 +11,7 @@ import { selectItems } from '../slices/basketSlice';
 import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
 import db from '../../firebase';
+import { Avatar } from '@material-ui/core';
 // import { MaterialCommunityIcons } from 'react-web-vector-icons';
 
 function header() {
@@ -72,11 +73,13 @@ function header() {
         </div>
         {/* Right */}
         <div className=' text-gray-600 flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-          <div
-            onMouseOver={() => setShowSignOut(true)}
-            onClick={!session && signIn}
-            className='link'
-          >
+          <div className='hover_animation'>
+            <Avatar
+              onMouseOver={() => setShowSignOut(true)}
+              src={session.user.image}
+            />
+          </div>
+          <div onClick={!session && signIn} className='link'>
             <p>
               Hello,{' '}
               {session ? (
@@ -108,7 +111,7 @@ function header() {
         </div>
       </div>
       {/* Bottom navigation */}
-      <div className='bg-white flex text-amazon_blue space-x-3 p-2 pl-6 whitespace-nowrap items-center text-xs'>
+      <div className=' bg-white flex text-amazon_blue space-x-3 p-2 pl-6 whitespace-nowrap items-center text-xs'>
         <p
           onClick={() => setShowSideBar(true)}
           className='link flex items-center '

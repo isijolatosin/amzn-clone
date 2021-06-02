@@ -1,6 +1,10 @@
 module.exports = {
   images: {
-    domains: ['links.papareact.com', 'fakestoreapi.com'],
+    domains: [
+      'lh3.googleusercontent.com',
+      'links.papareact.com',
+      'fakestoreapi.com',
+    ],
   },
 
   env: {
