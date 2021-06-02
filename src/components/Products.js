@@ -61,16 +61,16 @@ function Products({ id, title, price, description, category, image }) {
     <div
       onMouseOver={() => setShowTitle(true)}
       onMouseLeave={() => setShowTitle(false)}
-      className='relative flex flex-col m-5 bg-white z-30 p-10 pt-16 hover_animation_nocursor'
+      className='relative rounded-3xl flex flex-col m-5 bg-white z-30 p-10 pt-16 hover_animation_nocursor'
     >
-      <p className='absolute top-2 right-2 text-xs italic text-gray-400'>
+      <p className='absolute top-3 right-5 text-xs italic text-gray-400'>
         {category}
       </p>
-      <div className='absolute top-6 right-2 flex self-end mb-3'>
+      <div className='absolute top-6 right-5 flex self-end mb-3'>
         {Array(rating)
           .fill()
           .map((_, i) => (
-            <StarIcon className='h-5 text-yellow-500' />
+            <StarIcon className='h-5 text-red-500' />
           ))}
       </div>
       <Image src={image} height={200} width={200} objectFit='contain' />
