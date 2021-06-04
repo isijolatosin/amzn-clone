@@ -81,7 +81,7 @@ function header() {
               />
             </div>
           )}
-          <div onClick={!session && signIn} className='link'>
+          <div onClick={!session ? signIn : null} className='link'>
             <p>
               Hello,{' '}
               {session ? (
