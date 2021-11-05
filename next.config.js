@@ -2,8 +2,8 @@ module.exports = {
   images: {
     domains: [
       'lh3.googleusercontent.com',
+      'links.papareact.com',
       'fakestoreapi.com',
-      '...you can add other api for image'
     ],
   },
 
