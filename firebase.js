@@ -1,12 +1,12 @@
 import firebase from 'firebase';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyC6jgVGdUoP7mtW20LTFoR6v6tOOBJX-g4',
-  authDomain: 'clone-nextjs-9547c.firebaseapp.com',
-  projectId: 'clone-nextjs-9547c',
-  storageBucket: 'clone-nextjs-9547c.appspot.com',
-  messagingSenderId: '444840860723',
-  appId: '1:444840860723:web:54eafcc26ad17992cfd746',
+  apiKey: '<FIREBASE_API_KEY>',
+  authDomain: '<FIREBASE_AUTH_DOMAIN',
+  projectId: 'FIREBASE_PROJECT_ID',
+  storageBucket: 'FIREBASE_STORAGE_BUCKET',
+  messagingSenderId: 'FIREBASE_MASSAGING_SENDER_ID',
+  appId: 'FIREBASE_APP_ID',
 };
 
 const app = !firebase.apps.length
